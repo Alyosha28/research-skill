@@ -1,0 +1,4 @@
+interface:
+  display_name: "通用研究"
+  short_description: "将研究问题转化为来源可核查的主张、可证伪的实验和范围准确的交付物"
+  default_prompt: "使用 $research 根据实际来源设计并执行有界研究，保留证据边界、失败结果和复现入口。"

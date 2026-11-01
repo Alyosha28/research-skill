@@ -1,0 +1,6 @@
+{
+  "comparison": {
+    "candidate_minus_baseline_seconds": -0.25,
+    "paired_tasks": 8
+  }
+}

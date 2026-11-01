@@ -1,0 +1,25 @@
+# 稳定的评测用例标识，与文件名一致。
+id: evidence-boundaries
+# 验证来源定位和证据角色保持分离。
+title: 保持开发证据与独立样本外证据的边界
+description: 输入只包含开发结果和一条诊断记录，回答不得扩大结论范围。
+
+input:
+  # 发送给 Agent 的单轮中文研究请求。
+  prompt: |
+    请根据以下来源回答“候选方法是否已经证明具有稳定优势”：
+    来源A：result.json 的 /development/delta 字段为 0.08，八个开发任务共享预算和随机种子。
+    来源B：trace.jsonl 显示两个任务因超时没有结果，缺失字段为 null。
+    当前没有独立样本外结果。
+    请用中文，严格使用“研究问题”“证据”“结论”“未知”四个标题。区分直接观察与解释，保留缺失状态，说明来源能够支持的范围。
+
+# 检查回答是否具备指定结构。
+expect:
+  must_contain: ["研究问题", "证据", "结论", "未知"]
+
+judge:
+  # 使用确定性规则检查证据边界与缺失处理。
+  type: rule_based
+  success:
+    - output_contains:
+        all: ["result.json", "trace.jsonl", "直接观察", "解释", "开发", "独立样本外", "缺失"]

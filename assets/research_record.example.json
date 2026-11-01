@@ -1,0 +1,37 @@
+{
+  "schema_version": "research-record/v1",
+  "question": "候选条件是否降低配对任务的执行耗时？",
+  "scope": {
+    "objective": "核对候选条件相对基线条件的耗时差。",
+    "deliverable": "一项带来源定位的定量主张。",
+    "allowed_sources": [
+      "assets/example_result.json"
+    ],
+    "excluded_sources": [
+      "未提供的外部结果"
+    ]
+  },
+  "claims": [
+    {
+      "id": "claim-001",
+      "statement": "在随附合成结果的八个配对任务上，候选条件减基线条件的平均耗时差为 -0.25 秒。",
+      "status": "supported",
+      "evidence_role": "primary",
+      "object": "候选条件与基线条件",
+      "metric": "平均配对耗时差",
+      "value": -0.25,
+      "unit": "秒",
+      "denominator": "8 个配对任务",
+      "comparison": "候选条件减基线条件",
+      "population_or_window": "随附合成结果",
+      "statistical_unit": "任务",
+      "source": {
+        "path": "example_result.json",
+        "locator": "/comparison/candidate_minus_baseline_seconds"
+      }
+    }
+  ],
+  "limitations": [
+    "合成示例只用于验证记录契约，不支持实际方法效果判断。"
+  ]
+}

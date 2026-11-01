@@ -1,0 +1,37 @@
+# skill-up 配置结构版本，保持原值。
+schema_version: v1alpha1
+
+environment:
+  # 纯文本研究任务不需要沙箱。
+  type: none
+
+skills:
+  - source: local_path
+    path: .
+    include: [SKILL.md, "references/**", "assets/**", "scripts/**"]
+    exclude: ["**/._*", "**/__pycache__/**", "**/*.pyc"]
+
+engine:
+  # 使用本机已有登录状态的 Agent Engine。
+  name: claude_code
+
+cases:
+  # 本次验证包含的研究行为用例。
+  files:
+    - evals/cases/evidence-boundaries.yaml
+    - evals/cases/matched-experiment.yaml
+    - evals/cases/failure-diagnosis.yaml
+  defaults:
+    timeout_seconds: 180
+    max_turns: 3
+    # 所有用例共用的低成本前置检查。
+    expect:
+      exit_code: 0
+      must_not_contain:
+        - "TODO"
+  parallelism: 1
+
+report:
+  # 每次运行生成的报告格式。
+  formats: [json]
+  artifacts: [transcript]
