@@ -1,0 +1,27 @@
+# 稳定的评测用例标识，与文件名一致。
+id: memory-usage
+# 验证记忆隔离与实际使用证据。
+title: 让经验记忆安全地影响后续提案
+description: 经验库混有选择阶段信息和敏感字段，提案器需要白名单与使用记录。
+
+input:
+  # 发送给 Agent 的中文记忆使用请求。
+  prompt: |
+    经验库有大量历史记录，其中混有当前实验的选择阶段结果和原始敏感字段。下一轮提案器应该如何使用经验？请按“记忆”“隔离”“提案”三部分回答，在结构化提案中列出 memory.used 里的经验 id，并说明如何证明记忆真的参与了提案。
+
+# 检查回答是否具备指定结构。
+expect:
+  must_contain: ["记忆", "隔离", "提案"]
+
+judge:
+  # 使用确定性规则检查信息隔离和实际使用标识。
+  type: rule_based
+  success:
+    - output_contains:
+        all: ["记忆"]
+    - output_contains:
+        any: ["白名单", "剔除", "删除", "过滤", "脱敏", "访问权限"]
+    - output_contains:
+        any: ["memory.used", "used_experience_ids", "experience_id", "条目标识", "实际使用", "使用位置"]
+    - output_contains:
+        any: ["选择阶段", "选择数据", "select", "最终确认"]

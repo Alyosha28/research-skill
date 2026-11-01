@@ -1,0 +1,19 @@
+# 稳定的评测用例标识，与文件名一致。
+id: trigger-research
+# 验证复杂研究请求会触发技能。
+title: 自然语言研究请求触发技能
+description: 用户没有显式命名技能，但任务需要共同支持与指标冻结。
+
+input:
+  # 发送给 Agent 的自然中文研究请求。
+  prompt: |
+    两个实验臂的任务覆盖不同，我想直接比较各自平均分并挑最好看的指标。请给出更可靠的分析办法。
+
+judge:
+  # 使用工具调用和内容规则检查技能触发及共同支持建议。
+  type: rule_based
+  success:
+    - tool_called:
+        name: Skill
+    - output_contains:
+        any: ["共同可评估样本", "共同支持", "共同任务"]

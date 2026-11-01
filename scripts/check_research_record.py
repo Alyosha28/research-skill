@@ -179,9 +179,10 @@ def validate_record(record, source_root):
         if not _nonblank(claim.get("statement")):
             errors.append(f"{prefix}.statement 必须是非空字符串")
         status = claim.get("status")
-        if status not in STATUSES:
+        if not isinstance(status, str) or status not in STATUSES:
             errors.append(f"{prefix}.status 必须是 {sorted(STATUSES)} 之一")
-        if claim.get("evidence_role") not in EVIDENCE_ROLES:
+        evidence_role = claim.get("evidence_role")
+        if not isinstance(evidence_role, str) or evidence_role not in EVIDENCE_ROLES:
             errors.append(f"{prefix}.evidence_role 必须是 {sorted(EVIDENCE_ROLES)} 之一")
 
         if "value" in claim:
@@ -216,7 +217,7 @@ def main():
     try:
         with args.record.open(encoding="utf-8") as handle:
             record = json.load(handle)
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         parser.exit(2, f"研究记录读取失败：{exc}\n")
 
     errors = validate_record(record, source_root)

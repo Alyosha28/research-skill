@@ -1,0 +1,25 @@
+# 稳定的评测用例标识，与文件名一致。
+id: compose-tradeoff
+# 验证主要指标与行为约束共同决定采纳。
+title: 在主要指标改善时执行行为约束
+description: novelty 约束已经预定，主要指标改善不能自动覆盖约束损失。
+
+input:
+  # 发送给 Agent 的中文 Compose 判断请求。
+  prompt: |
+    候选在共同可评估样本上提高主要指标，但 novelty 从 0.6 降到 0.2，协议要求 novelty 不得下降。请按“主要指标”“行为约束”“决定”给出 Compose 结论，当前候选的直接决定明确使用 dropped，后续修订另行记录。
+
+# 检查回答是否具备指定结构。
+expect:
+  must_contain: ["主要指标", "行为约束", "决定"]
+
+judge:
+  # 使用确定性规则检查共同支持、行为约束和舍弃决定。
+  type: rule_based
+  success:
+    - output_contains:
+        all: ["主要指标", "novelty"]
+    - output_contains:
+        any: ["dropped", "不采纳", "舍弃"]
+    - output_contains:
+        any: ["共同可评估样本", "共同支持"]

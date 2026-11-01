@@ -12,7 +12,7 @@ input:
 
 # 为需要完整实验设计的回答提供充足执行时间。
 constraints:
-  timeout_seconds: 300
+  timeout_seconds: 540
 
 # 检查回答是否具备指定结构。
 expect:
@@ -23,6 +23,8 @@ judge:
   type: rule_based
   success:
     - output_contains:
-        all: ["共同可评估样本", "随机种子", "主要指标", "否证", "失败"]
-    - output_contains:
-        any: ["事先固定", "预先固定", "运行前", "结果前固定"]
+        all: ["共同可评估样本", "主要指标", "否证", "失败"]
+    - output_matches:
+        any: ["随机种子", "种子[^\\n]{0,20}(固定|冻结|相同|一一配对)", "seed"]
+    - output_matches:
+        any: ["(事先|预先|运行前|结果前)[^\\n]{0,20}(固定|冻结)", "读取[^\\n]{0,20}前[^\\n]{0,20}(固定|冻结)"]

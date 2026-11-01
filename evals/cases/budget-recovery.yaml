@@ -1,0 +1,27 @@
+# 稳定的评测用例标识，与文件名一致。
+id: budget-recovery
+# 验证提案持久化后的预算继承与恢复。
+title: 恢复执行时保留提案和累计成本
+description: 模型调用已经完成，恢复需要避免重复计费并保持协议身份。
+
+input:
+  # 发送给 Agent 的中文预算恢复请求。
+  prompt: |
+    模型调用已经完成，proposal.json 和 model_usage.json 已保存，随后执行器在候选运行前超时。剩余预算有限。请按“恢复”“预算”“执行”说明处理，重点说明提案复用、模型调用、累计成本，并保持原协议身份。
+
+# 检查回答是否具备指定结构。
+expect:
+  must_contain: ["恢复", "预算", "执行"]
+
+judge:
+  # 使用确定性规则检查提案复用、累计预算和身份保持。
+  type: rule_based
+  success:
+    - output_contains:
+        all: ["提案", "预算"]
+    - output_contains:
+        any: ["继承", "累计"]
+    - output_matches:
+        any: ["提案复用", "复用.{0,4}提案", "跳过.{0,4}propose", "复用.{0,8}proposal", "不重新生成.{0,8}提案", "不得重复.{0,8}提案", "禁止.{0,8}propose", "不新增模型调用", "新增模型调用为.{0,8}0"]
+    - output_contains:
+        any: ["相同", "原协议", "身份", "一致"]

@@ -93,6 +93,12 @@ class ResearchRecordTest(unittest.TestCase):
                     errors = validate_record(self.record, source_root)
                     self.assertTrue(any("source 无法解析" in error for error in errors))
 
+    def test_enum_fields_reject_non_string_values(self):
+        self.record["claims"][0]["status"] = []
+        self.record["claims"][0]["evidence_role"] = {}
+        errors = validate_record(self.record, self.source_root)
+        self.assertEqual(len([error for error in errors if "之一" in error]), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

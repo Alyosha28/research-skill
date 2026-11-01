@@ -21,14 +21,22 @@ cases:
     - evals/cases/evidence-boundaries.yaml
     - evals/cases/matched-experiment.yaml
     - evals/cases/failure-diagnosis.yaml
+    - evals/cases/harness-levels.yaml
+    - evals/cases/route-control.yaml
+    - evals/cases/memory-usage.yaml
+    - evals/cases/budget-recovery.yaml
+    - evals/cases/compose-tradeoff.yaml
+    - evals/cases/trigger-research.yaml
+    - evals/cases/trigger-near-miss.yaml
   defaults:
-    timeout_seconds: 180
+    timeout_seconds: 540
     max_turns: 3
     # 所有用例共用的低成本前置检查。
     expect:
       exit_code: 0
       must_not_contain:
         - "TODO"
+  # 用例串行运行，避免并发模型请求造成基础设施超时。
   parallelism: 1
 
 report:

@@ -1,0 +1,25 @@
+# 稳定的评测用例标识，与文件名一致。
+id: route-control
+# 验证明确路线选择与新运行承接。
+title: 在持续约束冲突时选择研究路线
+description: 连续候选无法满足行为约束，路线决定需要保留历史并明确承接。
+
+input:
+  # 发送给 Agent 的中文路线控制请求。
+  prompt: |
+    连续四轮提高主要指标的候选都降低多样性，现有路线已没有满足约束的提案。团队想继续在同一运行里调阈值。请用中文按“路线”“依据”“承接”三部分给出单一最终路线，说明是否选择 STOP、FORK 或 REFRAME，以及历史运行如何处理；承接部分说明新运行、恢复入口或新协议。最后一行严格写成“最终路线：STOP”“最终路线：FORK”或“最终路线：REFRAME”。
+
+# 检查回答是否具备指定结构。
+expect:
+  must_contain: ["路线", "依据", "承接"]
+
+judge:
+  # 使用确定性规则检查单一最终路线、历史保留和承接身份。
+  type: rule_based
+  success:
+    - output_matches:
+        any: ["(?m)最终路线[：:]\\s*\\**\\s*(STOP|FORK|REFRAME)"]
+    - output_contains:
+        all: ["历史", "约束"]
+    - output_contains:
+        any: ["新运行", "恢复入口", "新协议"]

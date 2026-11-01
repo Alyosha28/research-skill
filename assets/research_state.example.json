@@ -1,0 +1,79 @@
+{
+  "schema_version": "research-state/v1",
+  "question": {
+    "id": "question-001",
+    "statement": "结构化记忆是否改善共同任务上的配对主要指标？",
+    "research_level": "harness_evolution",
+    "primary_metric": "paired_primary_delta",
+    "falsification": "配对主要指标差值达到预定否证条件。"
+  },
+  "protocol": {
+    "id": "protocol-001",
+    "data_role": "development",
+    "statistical_unit": "task_seed",
+    "comparison": "candidate_minus_reference",
+    "frozen": false
+  },
+  "states": {
+    "active": "state-active-001",
+    "reference": "state-reference-001"
+  },
+  "budget": {
+    "model_calls": {
+      "used": 1,
+      "limit": 2
+    },
+    "input_tokens": {
+      "used": 1200,
+      "limit": 4000
+    },
+    "output_tokens": {
+      "used": 300,
+      "limit": 1000
+    },
+    "candidate_slots": {
+      "used": 1,
+      "limit": 2
+    }
+  },
+  "proposals": [
+    {
+      "id": "proposal-001",
+      "hypothesis": "相关历史经验能够减少重复无效编辑。",
+      "edit": {
+        "memory": "select_related_lessons"
+      },
+      "expected_mechanism": "提案器读取适用经验后避开已经失败的编辑路径。",
+      "applicability": "相同任务类型、预算范围与开放编辑表面。",
+      "falsification": "无效编辑比例没有下降，或主要指标达到否证条件。",
+      "model_id": "model-example",
+      "usage": {
+        "input_tokens": 1200,
+        "output_tokens": 300
+      },
+      "status": "proposed"
+    }
+  ],
+  "route": {
+    "decision": "EXPLOIT",
+    "reason": "当前协议内仍有可检验的局部提案。",
+    "source_run": "run-001"
+  },
+  "memory": {
+    "used": [
+      {
+        "id": "lesson-001",
+        "evidence": "trace.jsonl#/proposals/proposal-000",
+        "applicability": "相同任务类型与预算范围"
+      }
+    ],
+    "route_history": "route_history.jsonl"
+  },
+  "recovery": {
+    "run_id": "run-001",
+    "config": "config.json",
+    "result": "result.json",
+    "trace": "trace.jsonl",
+    "resume_command": "<host-resume-command> --run run-001"
+  }
+}

@@ -1,0 +1,24 @@
+# 稳定的评测用例标识，与文件名一致。
+id: trigger-near-miss
+# 验证普通文字改写不会误触发研究技能。
+title: 日常文字修改保持常规处理
+description: 请求只需改写礼貌用语，不需要研究流程。
+
+input:
+  # 发送给 Agent 的单句中文改写请求。
+  prompt: |
+    请将“把结果发给我”改成礼貌的中文邮件句子，只输出改写后的句子。
+
+# 检查回答仍包含原句核心对象。
+expect:
+  must_contain: ["结果"]
+
+judge:
+  # 使用确定性规则检查礼貌表达，并拒绝研究技能调用。
+  type: rule_based
+  success:
+    - output_contains:
+        any: ["请", "麻烦"]
+  failure:
+    - tool_called:
+        name: Skill
