@@ -2,6 +2,10 @@
 
 **把研究问题变成可检验的实验、可追溯的证据和可恢复的研究状态。**
 
+<p align="center">
+  <img src="assets/research-whale.gif" alt="戴着博士帽、手持放大镜检查研究文档的 DeepSeek 鲸鱼终端像素动画" width="720">
+</p>
+
 `research` 是一项通用 Agent Skill。它用 Propose–Probe–Compose 组织模型推理与宿主执行器提供的真实执行，帮助 Agent 设计公平对照、保留失败证据、选择研究路线，并在预算中断后继续工作。
 
 [快速开始](#快速开始) · [核心方法](#核心方法) · [使用示例](#使用示例) · [结构化契约](#结构化契约) · [设计文档](skill_design.md) · [许可证](LICENSE)
@@ -174,6 +178,7 @@ skill-up run evals/eval.yaml
 - [`references/research-loop.md`](references/research-loop.md)：两个研究层次、Propose–Probe–Compose、路线与记忆。
 - [`references/execution.md`](references/execution.md)：宿主接口、信息隔离、预算与恢复。
 - [`references/communication.md`](references/communication.md)：研究写作、图表与交付检查。
+- [`scripts/draw_research_whale.py`](scripts/draw_research_whale.py)：重新生成 README 动画，需要 Pillow。
 - [`evals/`](evals/)：可复现的行为与触发评测。
 
 ## 参与改进
