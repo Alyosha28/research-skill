@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "assets" / "research-whale-deepseek.gif"
+OUTPUT = ROOT / "assets" / "research-whale-deepseek-compact.gif"
 FONT_PATH = "/System/Library/Fonts/Supplemental/Andale Mono.ttf"
 WIDTH, HEIGHT = 320, 180
 SCALE = 3
@@ -113,9 +113,6 @@ def draw_whale(draw, frame_index, bob):
     draw.line((187, 40 + cap_y, 191 + sway, 61 + cap_y), fill=YELLOW, width=1)
     draw.rectangle((189 + sway, 61 + cap_y, 193 + sway, 66 + cap_y), fill=YELLOW)
 
-    draw.line((181, 139 + body_y, 207, 111), fill=BLUE_DARK, width=5)
-    draw.line((182, 137 + body_y, 207, 109), fill=WHITE, width=2)
-
 
 def draw_document(draw, frame_index, lens_x, lens_y):
     draw.polygon(((231, 61), (274, 61), (290, 77), (290, 139), (231, 139)), fill=WHITE)
@@ -160,12 +157,22 @@ def make_frame(frame_index):
     image = Image.new("RGBA", (WIDTH, HEIGHT), BG)
     draw = ImageDraw.Draw(image, "RGBA")
     draw_background(draw, frame_index)
-    draw_spout(draw, frame_index)
 
+    whale_layer = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+    whale_draw = ImageDraw.Draw(whale_layer, "RGBA")
+    draw_spout(whale_draw, frame_index)
     bob = round(math.sin(frame_index * math.pi / 12) * 2)
+    draw_whale(whale_draw, frame_index, bob)
+    whale_layer = whale_layer.resize((240, 135), Image.Resampling.NEAREST)
+    image.alpha_composite(whale_layer, dest=(22, 28))
+
+    flipper_x = 22 + round(181 * 0.75)
+    flipper_y = 28 + round(139 * 0.75)
+    draw.line((flipper_x, flipper_y, 207, 111), fill=BLUE_DARK, width=5)
+    draw.line((flipper_x + 1, flipper_y - 2, 207, 109), fill=WHITE, width=2)
+
     lens_x = 249 + round(math.sin(frame_index * math.pi / 12) * 5)
     lens_y = 96 + round(math.cos(frame_index * math.pi / 12) * 4)
-    draw_whale(draw, frame_index, bob)
     draw_document(draw, frame_index, lens_x, lens_y)
     draw_magnifier(draw, lens_x, lens_y)
     draw_footer(draw, frame_index)
