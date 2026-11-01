@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "assets" / "research-whale-chibi.gif"
+OUTPUT = ROOT / "assets" / "research-whale-deepseek.gif"
 FONT_PATH = "/System/Library/Fonts/Supplemental/Andale Mono.ttf"
 WIDTH, HEIGHT = 320, 180
 SCALE = 3
@@ -20,9 +20,9 @@ BG = "#06111d"
 PANEL = "#0a1c2b"
 GRID = "#102b3d"
 CYAN = "#4de4e8"
-BLUE = "#2387d9"
-BLUE_DARK = "#1260a4"
-BLUE_LIGHT = "#82d9f7"
+BLUE = "#5b7fc0"
+BLUE_DARK = "#38568c"
+BLUE_LIGHT = "#d7f0ff"
 WHITE = "#e8fbff"
 MUTED = "#75a6b8"
 GREEN = "#79f2b0"
@@ -73,43 +73,48 @@ def draw_whale(draw, frame_index, bob):
     blink = frame_index in {10, 11, 22, 23}
     body_y = bob
 
-    # Q 版比例：短小身体、超大头部、圆眼睛和小鳍。
-    draw.polygon(((78, 91 + body_y), (60, 81 + body_y), (64, 96 + body_y),
-                  (56, 109 + body_y), (80, 104 + body_y)), fill=BLUE_DARK)
-    draw.polygon(((105, 82 + body_y), (112, 72 + body_y), (122, 82 + body_y)), fill=BLUE_DARK)
-    draw.ellipse((72, 79 + body_y, 177, 134 + body_y), fill=BLUE)
-    draw.ellipse((130, 57 + body_y, 218, 133 + body_y), fill=BLUE)
-    draw.ellipse((92, 108 + body_y, 192, 137 + body_y), fill=BLUE_LIGHT)
-    draw.ellipse((148, 108 + body_y, 207, 135 + body_y), fill=BLUE_LIGHT)
-    draw.polygon(((140, 119 + body_y), (161, 128 + body_y), (148, 139 + body_y),
-                  (132, 128 + body_y)), fill=BLUE_DARK)
+    def points(values):
+        return [(x, y + body_y) for x, y in values]
 
-    eye_y = 80 + body_y
+    def box(values):
+        left, top, right, bottom = values
+        return left, top + body_y, right, bottom + body_y
+
+    # DeepSeek 图标轮廓：圆身、右上尾鳍、白色大腹部与弯月眼。
+    draw.polygon(points(((158, 88), (174, 70), (183, 55), (187, 41), (191, 30),
+                         (197, 26), (203, 29), (202, 40), (204, 48), (209, 53),
+                         (216, 51), (224, 47), (232, 48), (234, 54), (231, 65),
+                         (226, 75), (218, 83), (208, 88), (197, 89), (181, 94))), fill=BLUE)
+    draw.polygon(points(((116, 38), (130, 25), (145, 28), (137, 39))), fill=BLUE)
+    draw.ellipse(box((43, 32, 193, 154)), fill=BLUE, outline=BLUE_DARK, width=1)
+
+    draw.polygon(points(((52, 76), (62, 70), (79, 69), (99, 74), (118, 83),
+                         (135, 96), (150, 111), (164, 128), (174, 141), (161, 146),
+                         (145, 146), (127, 142), (109, 134), (93, 123), (79, 110),
+                         (67, 95), (58, 82))), fill=WHITE)
+    draw.polygon(points(((128, 132), (137, 124), (145, 128), (141, 137), (134, 142))), fill=BLUE)
+
     if blink:
-        draw.arc((179, eye_y + 4, 192, eye_y + 12), 10, 170, fill=INK, width=2)
+        draw.arc(box((157, 65, 181, 85)), 15, 165, fill=WHITE, width=3)
     else:
-        draw.ellipse((178, eye_y, 192, eye_y + 16), fill=WHITE)
-        draw.ellipse((181, eye_y + 2, 192, eye_y + 15), fill=INK)
-        draw.rectangle((183, eye_y + 3, 187, eye_y + 7), fill=WHITE)
-        draw.point((189, eye_y + 11), fill=CYAN)
-    draw.rectangle((196, 98 + body_y, 202, 101 + body_y), fill="#ff9eb5")
-    draw.point((195, 99 + body_y), fill="#ffc2d1")
-    draw.line((197, 107 + body_y, 199, 109 + body_y), fill=INK, width=1)
-    draw.line((199, 109 + body_y, 201, 107 + body_y), fill=INK, width=1)
-    draw.line((201, 107 + body_y, 203, 109 + body_y), fill=INK, width=1)
-    draw.line((203, 109 + body_y, 205, 107 + body_y), fill=INK, width=1)
+        draw.arc(box((153, 58, 184, 91)), 285, 105, fill=WHITE, width=4)
+        draw.ellipse(box((155, 82, 160, 87)), fill=WHITE)
+    draw.rectangle((177, 94 + body_y, 182, 97 + body_y), fill="#ff9eb5")
+
+    draw.polygon(points(((174, 137), (190, 138), (204, 147), (195, 153),
+                         (181, 151), (172, 145))), fill=BLUE_DARK)
 
     cap_y = body_y
-    draw.polygon(((139, 58 + cap_y), (176, 43 + cap_y), (216, 55 + cap_y),
-                  (181, 69 + cap_y)), fill=CAP, outline=CYAN)
-    draw.rectangle((159, 55 + cap_y, 195, 72 + cap_y), fill=CAP, outline=BLUE_DARK)
-    draw.line((176, 45 + cap_y, 176, 58 + cap_y), fill=YELLOW, width=1)
+    draw.polygon(((120, 43 + cap_y), (154, 27 + cap_y), (193, 38 + cap_y),
+                  (159, 54 + cap_y)), fill=CAP, outline=CYAN)
+    draw.rectangle((140, 40 + cap_y, 176, 58 + cap_y), fill=CAP, outline=BLUE_DARK)
+    draw.line((154, 29 + cap_y, 154, 43 + cap_y), fill=YELLOW, width=1)
     sway = round(math.sin(frame_index * math.pi / 6) * 3)
-    draw.line((210, 56 + cap_y, 213 + sway, 77 + cap_y), fill=YELLOW, width=1)
-    draw.rectangle((211 + sway, 77 + cap_y, 215 + sway, 82 + cap_y), fill=YELLOW)
+    draw.line((187, 40 + cap_y, 191 + sway, 61 + cap_y), fill=YELLOW, width=1)
+    draw.rectangle((189 + sway, 61 + cap_y, 193 + sway, 66 + cap_y), fill=YELLOW)
 
-    draw.line((172, 118 + body_y, 204, 110 + body_y), fill=BLUE_DARK, width=5)
-    draw.line((174, 116 + body_y, 204, 108 + body_y), fill=BLUE_LIGHT, width=2)
+    draw.line((181, 139 + body_y, 207, 111), fill=BLUE_DARK, width=5)
+    draw.line((182, 137 + body_y, 207, 109), fill=WHITE, width=2)
 
 
 def draw_document(draw, frame_index, lens_x, lens_y):
