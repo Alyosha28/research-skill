@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "assets" / "research-whale.gif"
+OUTPUT = ROOT / "assets" / "research-whale-chibi.gif"
 FONT_PATH = "/System/Library/Fonts/Supplemental/Andale Mono.ttf"
 WIDTH, HEIGHT = 320, 180
 SCALE = 3

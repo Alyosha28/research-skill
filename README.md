@@ -3,7 +3,7 @@
 **把研究问题变成可检验的实验、可追溯的证据和可恢复的研究状态。**
 
 <p align="center">
-  <img src="assets/research-whale.gif" alt="戴着博士帽、手持放大镜检查研究文档的 DeepSeek 鲸鱼终端像素动画" width="720">
+  <img src="assets/research-whale-chibi.gif" alt="戴着博士帽、手持放大镜检查研究文档的 Q 版 DeepSeek 鲸鱼终端像素动画" width="720">
 </p>
 
 `research` 是一项通用 Agent Skill。它用 Propose–Probe–Compose 组织模型推理与宿主执行器提供的真实执行，帮助 Agent 设计公平对照、保留失败证据、选择研究路线，并在预算中断后继续工作。
