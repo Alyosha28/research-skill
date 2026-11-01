@@ -73,37 +73,43 @@ def draw_whale(draw, frame_index, bob):
     blink = frame_index in {10, 11, 22, 23}
     body_y = bob
 
-    draw.polygon(((62, 88 + body_y), (43, 76 + body_y), (48, 96 + body_y),
-                  (39, 113 + body_y), (64, 106 + body_y)), fill=BLUE_DARK)
-    draw.polygon(((103, 79 + body_y), (112, 67 + body_y), (124, 80 + body_y)), fill=BLUE_DARK)
-    draw.ellipse((57, 72 + body_y, 190, 132 + body_y), fill=BLUE)
-    draw.ellipse((143, 69 + body_y, 207, 121 + body_y), fill=BLUE)
-    draw.ellipse((86, 103 + body_y, 198, 135 + body_y), fill=BLUE_LIGHT)
-    draw.rectangle((96, 116 + body_y, 193, 128 + body_y), fill=BLUE_LIGHT)
-    draw.polygon(((147, 115 + body_y), (174, 124 + body_y), (157, 137 + body_y),
-                  (140, 126 + body_y)), fill=BLUE_DARK)
+    # Q 版比例：短小身体、超大头部、圆眼睛和小鳍。
+    draw.polygon(((78, 91 + body_y), (60, 81 + body_y), (64, 96 + body_y),
+                  (56, 109 + body_y), (80, 104 + body_y)), fill=BLUE_DARK)
+    draw.polygon(((105, 82 + body_y), (112, 72 + body_y), (122, 82 + body_y)), fill=BLUE_DARK)
+    draw.ellipse((72, 79 + body_y, 177, 134 + body_y), fill=BLUE)
+    draw.ellipse((130, 57 + body_y, 218, 133 + body_y), fill=BLUE)
+    draw.ellipse((92, 108 + body_y, 192, 137 + body_y), fill=BLUE_LIGHT)
+    draw.ellipse((148, 108 + body_y, 207, 135 + body_y), fill=BLUE_LIGHT)
+    draw.polygon(((140, 119 + body_y), (161, 128 + body_y), (148, 139 + body_y),
+                  (132, 128 + body_y)), fill=BLUE_DARK)
 
-    eye_y = 84 + body_y
+    eye_y = 80 + body_y
     if blink:
-        draw.line((179, eye_y + 2, 186, eye_y + 2), fill=INK, width=2)
+        draw.arc((179, eye_y + 4, 192, eye_y + 12), 10, 170, fill=INK, width=2)
     else:
-        draw.rectangle((179, eye_y, 186, eye_y + 6), fill=WHITE)
-        draw.rectangle((182, eye_y + 1, 186, eye_y + 5), fill=INK)
-        draw.point((183, eye_y + 1), fill=CYAN)
-    draw.line((192, 101 + body_y, 198, 103 + body_y), fill=BLUE_DARK, width=1)
-    draw.line((198, 103 + body_y, 201, 101 + body_y), fill=BLUE_DARK, width=1)
+        draw.ellipse((178, eye_y, 192, eye_y + 16), fill=WHITE)
+        draw.ellipse((181, eye_y + 2, 192, eye_y + 15), fill=INK)
+        draw.rectangle((183, eye_y + 3, 187, eye_y + 7), fill=WHITE)
+        draw.point((189, eye_y + 11), fill=CYAN)
+    draw.rectangle((196, 98 + body_y, 202, 101 + body_y), fill="#ff9eb5")
+    draw.point((195, 99 + body_y), fill="#ffc2d1")
+    draw.line((197, 107 + body_y, 199, 109 + body_y), fill=INK, width=1)
+    draw.line((199, 109 + body_y, 201, 107 + body_y), fill=INK, width=1)
+    draw.line((201, 107 + body_y, 203, 109 + body_y), fill=INK, width=1)
+    draw.line((203, 109 + body_y, 205, 107 + body_y), fill=INK, width=1)
 
     cap_y = body_y
-    draw.polygon(((151, 60 + cap_y), (181, 48 + cap_y), (212, 58 + cap_y),
-                  (183, 69 + cap_y)), fill=CAP, outline=CYAN)
-    draw.rectangle((168, 58 + cap_y, 197, 72 + cap_y), fill=CAP, outline=BLUE_DARK)
-    draw.line((181, 50 + cap_y, 181, 60 + cap_y), fill=YELLOW, width=1)
+    draw.polygon(((139, 58 + cap_y), (176, 43 + cap_y), (216, 55 + cap_y),
+                  (181, 69 + cap_y)), fill=CAP, outline=CYAN)
+    draw.rectangle((159, 55 + cap_y, 195, 72 + cap_y), fill=CAP, outline=BLUE_DARK)
+    draw.line((176, 45 + cap_y, 176, 58 + cap_y), fill=YELLOW, width=1)
     sway = round(math.sin(frame_index * math.pi / 6) * 3)
-    draw.line((207, 59 + cap_y, 210 + sway, 77 + cap_y), fill=YELLOW, width=1)
-    draw.rectangle((208 + sway, 77 + cap_y, 212 + sway, 82 + cap_y), fill=YELLOW)
+    draw.line((210, 56 + cap_y, 213 + sway, 77 + cap_y), fill=YELLOW, width=1)
+    draw.rectangle((211 + sway, 77 + cap_y, 215 + sway, 82 + cap_y), fill=YELLOW)
 
-    draw.line((175, 118 + body_y, 204, 110 + body_y), fill=BLUE_DARK, width=5)
-    draw.line((176, 116 + body_y, 204, 108 + body_y), fill=BLUE_LIGHT, width=2)
+    draw.line((172, 118 + body_y, 204, 110 + body_y), fill=BLUE_DARK, width=5)
+    draw.line((174, 116 + body_y, 204, 108 + body_y), fill=BLUE_LIGHT, width=2)
 
 
 def draw_document(draw, frame_index, lens_x, lens_y):
