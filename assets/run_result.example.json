@@ -1,0 +1,11 @@
+{
+  "schema_version": "research-run/v1",
+  "run_id": "run-0001",
+  "kind": "candidate",
+  "status": "succeeded",
+  "metrics": {
+    "paired_latency_seconds": 1.25,
+    "error_rate": 0.012
+  },
+  "errors": []
+}

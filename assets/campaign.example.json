@@ -1,0 +1,82 @@
+{
+  "schema_version": "research-campaign/v1",
+  "campaign_id": "paired-latency",
+  "question": "结构化记忆是否降低共同任务的配对执行耗时？",
+  "research_level": "harness_evolution",
+  "evidence_level": "E2",
+  "design_lock": {
+    "status": "locked",
+    "locked_at": "2026-10-20",
+    "retrospective": false,
+    "reference": "campaign_source.example.json#/design"
+  },
+  "protocol": {
+    "id": "protocol-001",
+    "data_role": "development",
+    "statistical_unit": "task_seed",
+    "comparison": "candidate_minus_baseline",
+    "frozen": false
+  },
+  "data_snapshot": "synthetic-fixture-20261020",
+  "mapping_version": "task-set-v1",
+  "seed": 20261020,
+  "evidence": [
+    {
+      "id": "design-note",
+      "title": "合成设计说明",
+      "source": {
+        "path": "campaign_source.example.json",
+        "locator": "/design"
+      },
+      "claim": "主要指标与最小改善在读取结果前固定。",
+      "accessed_at": "2026-10-20"
+    }
+  ],
+  "baseline_parameters": {
+    "memory_slots": 0
+  },
+  "search_space": {
+    "memory_slots": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    }
+  },
+  "proposer": {
+    "type": "static"
+  },
+  "runner": {
+    "command": [
+      "{python}",
+      "-I",
+      "run_task.py"
+    ],
+    "working_directory": ".",
+    "timeout_seconds": 120,
+    "metrics_source": "stdout_key_value",
+    "environment_allowlist": []
+  },
+  "evaluation": {
+    "primary_metric": "paired_latency_seconds",
+    "minimum_improvement": 0.1,
+    "metrics": {
+      "paired_latency_seconds": {
+        "direction": "minimize",
+        "limit": 2.0
+      },
+      "error_rate": {
+        "direction": "minimize",
+        "limit": 0.05,
+        "regression_tolerance": 0.005
+      }
+    }
+  },
+  "budget": {
+    "max_iterations": 4,
+    "max_consecutive_failures": 2,
+    "max_model_calls": 8,
+    "max_input_tokens": 8000,
+    "max_output_tokens": 2000,
+    "max_wall_seconds": 900
+  }
+}

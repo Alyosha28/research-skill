@@ -1,0 +1,10 @@
+{
+  "design": {
+    "question": "结构化记忆是否降低共同任务的配对执行耗时？",
+    "primary_metric": "paired_latency_seconds",
+    "minimum_improvement": 0.1,
+    "comparison": "candidate_minus_baseline",
+    "statistical_unit": "task_seed",
+    "data_snapshot": "synthetic-fixture-20261020"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "research-audit/v1",
+  "report_id": "audit-20261020",
+  "auditor": "read-only audit agent",
+  "scope": [
+    "scripts/check_campaign.py",
+    "references/run-contract.md"
+  ],
+  "commit": "4f3c2a1",
+  "created_at": "2026-10-20T09:30:00Z",
+  "commands": [
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "return_code": 0
+    },
+    {
+      "command": "python3 scripts/check_campaign.py assets/campaign.example.json",
+      "return_code": 0
+    }
+  ],
+  "findings": [
+    {
+      "id": "finding-001",
+      "severity": "medium",
+      "file": "scripts/check_campaign.py",
+      "line": 412,
+      "summary": "基线指标缺失时只记录一次原因。",
+      "failure_scenario": "基线结果缺少守卫指标时，采纳决定仍然正确拒绝，但诊断信息不够具体。",
+      "evidence": "缺失守卫指标会触发基线指标不可用原因，采纳结果为拒绝。",
+      "status": "resolved",
+      "recommendation": "保持拒绝语义，并在诊断中列出具体指标名称。"
+    }
+  ],
+  "verdict": "pass",
+  "residual_risks": [
+    "示例审计只覆盖清单与评价脚本，领域计算仍需实际审阅。"
+  ]
+}

@@ -1,4 +1,4 @@
 interface:
   display_name: "通用研究"
-  short_description: "组织证据、可证伪实验、研究路线、恢复状态和范围准确的交付物"
-  default_prompt: "使用 $research 根据实际来源和研究状态设计有界研究，保留共同支持、失败结果、预算和复现入口。"
+  short_description: "组织证据、设计锁定、可证伪实验、研究路线、恢复状态、审计门槛和范围准确的交付物"
+  default_prompt: "使用 $research 根据实际来源和研究状态设计有界研究，锁定设计，保留共同支持、失败结果、预算、审计证据和复现入口。"

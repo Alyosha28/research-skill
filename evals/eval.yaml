@@ -26,6 +26,8 @@ cases:
     - evals/cases/memory-usage.yaml
     - evals/cases/budget-recovery.yaml
     - evals/cases/compose-tradeoff.yaml
+    - evals/cases/design-lock.yaml
+    - evals/cases/audit-gate.yaml
     - evals/cases/trigger-research.yaml
     - evals/cases/trigger-near-miss.yaml
   defaults:
